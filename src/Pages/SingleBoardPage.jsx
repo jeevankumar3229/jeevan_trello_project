@@ -1,9 +1,12 @@
 import React from 'react'
+import Header from '../Components/Header'
+import SingleBoard from '../Components/SingleBoard'
 
-const SingleBoardPage = () => {
+const SingleBoardPage = ({boards,setBoards}) => {
   return (
     <div>
-      testing
+      <Header/>
+      <SingleBoard boards={boards} setBoards={setBoards}/>
     </div>
   )
 }

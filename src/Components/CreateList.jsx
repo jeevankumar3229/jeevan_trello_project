@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import { Button, Popover, TextField, Stack, Typography, Box } from "@mui/material";
 
-const CreateBoard = ({ isOpen, onClose, anchorEl, handleSubmit, setBoards }) => {
+const CreateBoard = ({ isOpen, onClose, anchorEl, handleSubmit, setLists,id}) => {
   const [inputValue, setInputValue] = useState("");
 
   const onSubmit = (event) => {
     event.preventDefault();
-    handleSubmit(inputValue, setBoards); 
-    setInputValue(""); 
-    onClose(); 
+    handleSubmit(id,inputValue, setLists); // Call the parent's handleSubmit with the input value
+    setInputValue(""); // Clear the input after submission
+    onClose(); // Close the popover
   };
 
   return (
     <Popover
       open={isOpen}
-      anchorEl={anchorEl} 
+      anchorEl={anchorEl} // Anchor the popover to the button element
       onClose={onClose}
       anchorOrigin={{
         vertical: 'bottom',
@@ -53,9 +53,9 @@ const CreateBoard = ({ isOpen, onClose, anchorEl, handleSubmit, setBoards }) => 
         </Button>
         <form onSubmit={onSubmit}>
           <Stack spacing={2}>
-            <Typography variant="h6">Create Board</Typography>
+            <Typography variant="h6">Create List</Typography>
             <TextField
-              label="Create Board"
+              label="Create List"
               variant="outlined"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}

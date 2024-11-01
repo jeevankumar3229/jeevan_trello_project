@@ -3,12 +3,13 @@ import Header from '../Components/Header';
 import BoardList from '../Components/BoardList';
 import { Box } from '@mui/material';
 
-const HomePage = () => {
+const HomePage = (boards,setBoards) => {
+  
   return (
     <>
       <Header />
 
-      <BoardList />
+      <BoardList  boards={boards} setBoards={setBoards}/>
 
     </>
   );

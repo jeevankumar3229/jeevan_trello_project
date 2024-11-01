@@ -13,20 +13,16 @@ const BoardList = () => {
     const [boards, setBoards] = useState([]);
     const [loading, setLoading] = useState(true);
     const [popoverOpen, setPopoverOpen] = useState(false);
+    const [buttonAnchor, setButtonAnchor] = useState(null); 
 
-    // Fetch boards on component mount
     useEffect(() => {
-        const fetchData = async () => {
-            const boardsData = await fetchBoards();
-            setBoards(boardsData || []);
-            setLoading(false);
-        };
-
-        fetchData();
+        fetchBoards(setBoards,setLoading);
     }, []);
 
-    
-
+    const handleButtonClick = (event) => {
+        setPopoverOpen(true);
+        setButtonAnchor(event.currentTarget); 
+    };
 
     return (
         <>
@@ -35,11 +31,11 @@ const BoardList = () => {
             ) : (
                 <Box sx={{ minHeight: "100vh", display: 'flex', flexDirection: 'column', width: 'auto', backgroundImage: `url('src/assets/Images/night.jpg')` }}>
                     <Typography variant="h4" sx={{ pl: 7, color: "white", mt: "10px" }}>Boards</Typography>
-                    <Box sx={{ flexGrow: 1, p: 2 }}>
-                        <Grid container spacing={2} sx={{ pl: 5, pr: 5 }}>
+                    <Box>
+                        <Grid container spacing={2} sx={{ pl: 5 , pr: 5 }}>
                             <Grid item xs={12} sm={6} md={3} key="board">
                                 <ButtonBase
-                                    onClick={() => setPopoverOpen(true)} // Open the popover
+                                    onClick={handleButtonClick} 
                                     sx={{ width: '100%', display: 'block' }}
                                 >
                                     <Card sx={{ position: 'relative', borderRadius: 2, overflow: 'hidden', cursor: 'pointer' }}>
@@ -108,8 +104,14 @@ const BoardList = () => {
                             )}
                         </Grid>
                     </Box>
-                    {/* CreateBoard Popover */}
-                    <CreateBoard isOpen={popoverOpen} onClose={() => setPopoverOpen(false)} handleSubmit={handleCreateBoard} setBoards={setBoards} />
+                   
+                    <CreateBoard 
+                        isOpen={popoverOpen} 
+                        onClose={() => setPopoverOpen(false)} 
+                        anchorEl={buttonAnchor}
+                        handleSubmit={handleCreateBoard} 
+                        setBoards={setBoards} 
+                    />
                 </Box>
             )}
         </>
