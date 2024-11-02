@@ -3,14 +3,13 @@ const TOKEN_KEY = import.meta.env.VITE_TOKEN_KEY;
 import axios from "axios";
 
 
-async function fetchBoards(setBoards, setLoading) {
+async function fetchBoards(setBoards) {
     try {
         const response = await axios.get(
             `https://api.trello.com/1/members/me/boards?key=${API_KEY}&token=${TOKEN_KEY}`
         );
 
         setBoards(response.data);
-        setLoading(false);
     } catch (error) {
         console.log(error);
         return [];

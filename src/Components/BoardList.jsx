@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Card, CardContent, CardMedia, Grid, Typography, Link, ButtonBase } from '@mui/material';
 import { fetchBoards, handleCreateBoard } from '../util/utilityFunctions';
-import Spinner from '../Components/Spinner.jsx';
 import CreateBoard from './CreateBoard.jsx';
 
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -9,13 +8,12 @@ const TOKEN_KEY = import.meta.env.VITE_TOKEN_KEY;
 
 const BoardList = () => {
     const [boards, setBoards] = useState([]);
-    const [loading, setLoading] = useState();
     const [popoverOpen, setPopoverOpen] = useState(false);
     const [buttonAnchor, setButtonAnchor] = useState(null);
 
     useEffect(() => {
         async function fetch() {
-            await fetchBoards(setBoards, setLoading);
+            await fetchBoards(setBoards);
         }
         fetch()
     }, []);
