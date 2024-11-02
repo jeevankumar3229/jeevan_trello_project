@@ -114,5 +114,41 @@ async function deleteCard(id) {
     }
 }
 
+async function fetchChecklists(id, setChecklist){
+    try {
+        const response = await axios.get(
+            `https://api.trello.com/1/cards/${id}/checklists?key=${API_KEY}&token=${TOKEN_KEY}`
+        );
+        setChecklist(response.data)
 
-export { fetchBoards, handleCreateBoard, fetchSingleBoard ,fetchLists,handleCreateList,deleteList, fetchCardsForList, deleteCard}
+    } catch (error) {
+        console.log(error);
+        return [];
+    }
+}
+
+async function deleteChecklist(id,cardID) {
+    try {
+        const response = await axios.delete(
+            `https://api.trello.com/1/cards/${cardID}/checklists/${id}?key=${API_KEY}&token=${TOKEN_KEY}`
+        );
+        return response.status === 200;
+    } catch (error) {
+        console.error(`Error deleting list: ${error.message}`);
+        return false;
+    }
+}
+
+async function fetchCheckItems(id, setCheckItems){
+    try {
+        const response = await axios.get(
+            `https://api.trello.com/1/checklists/${id}/checkItems?key=${API_KEY}&token=${TOKEN_KEY}`
+        );
+        setCheckItems(response.data)
+
+    } catch (error) {
+        console.log(error);
+        return [];
+    }
+}
+export { fetchBoards, handleCreateBoard, fetchSingleBoard ,fetchLists,handleCreateList,deleteList, fetchCardsForList, deleteCard, fetchChecklists,deleteChecklist, fetchCheckItems}

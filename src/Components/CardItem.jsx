@@ -1,10 +1,14 @@
 // CardItem.js
-import React from 'react';
+import React, { useState } from 'react';
 import { Typography, ListItem } from '@mui/material';
 import { FaTimes } from 'react-icons/fa';
 import { deleteCard } from '../util/utilityFunctions';
+import AlertDialog from './AlertDialog';
 
 const CardItem = ({ card, cardIndex, cards, setCards }) => {
+
+    const [opens,setOpens]=useState(false)
+
     const removeCard = (index) => {
         const updatedCards = cards.filter((_, i) => i !== index);
         setCards(updatedCards); // Update the cards state to remove the deleted card
@@ -21,6 +25,10 @@ const CardItem = ({ card, cardIndex, cards, setCards }) => {
         }
     };
 
+    function openChecklist(){
+        setOpens(true)
+    }
+
     return (
         <ListItem
             sx={{
@@ -32,13 +40,18 @@ const CardItem = ({ card, cardIndex, cards, setCards }) => {
                 justifyContent: 'space-between',
                 alignItems: 'center'
             }}
+            onClick={openChecklist}
         >
             <Typography>{card.name}</Typography>
             <FaTimes
                 onClick={() => handleDeleteCard(card.id, cardIndex)}
                 style={{ cursor: 'pointer' }}
             />
+            <AlertDialog opens={opens} setOpens={setOpens} card={card}/>
         </ListItem>
+
+       
+
     );
 };
 
