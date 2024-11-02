@@ -3,7 +3,7 @@ import { FaTimes } from "react-icons/fa";
 import { deleteChecklist, fetchCheckItems } from "../util/utilityFunctions";
 import { useState, useEffect } from "react";
 import CheckItem from "./CheckItem";
-import axios from 'axios'; // Ensure axios is imported
+import axios from 'axios'; 
 import whiteImage from '../assets/Images/whitebg.jpg';
 
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -34,18 +34,18 @@ const Checklist = ({ checklistItem, index, checklist, setChecklist, cardId }) =>
         const checked = checkItems.filter(
           (item) => item.state === "complete"
         ).length;
-        return (checked / checkItems.length) * 100 || 0; // Avoid NaN when there are no checkItems
+        return (checked / checkItems.length) * 100 || 0; 
       };
 
     const handleCreateCheckItem = async (event) => {
-        event.preventDefault(); // Prevent the default form submission
+        event.preventDefault(); 
         if (inputValue) {
             try {
                 const response = await axios.post(
                     `https://api.trello.com/1/checklists/${checklistItem.id}/checkItems?name=${inputValue}&key=${API_KEY}&token=${TOKEN_KEY}`
                 );
                 setCheckItems((prevCheckItems) => [...prevCheckItems, response.data]);
-                setInputValue(""); // Clear input after adding
+                setInputValue(""); 
             } catch (error) {
                 console.error("Error creating checklist item:", error);
             }
@@ -99,12 +99,12 @@ const Checklist = ({ checklistItem, index, checklist, setChecklist, cardId }) =>
                         </Typography>
                         <LinearProgress
                             variant="determinate"
-                            value={calculateProgress()} // This value can be updated based on your logic
+                            value={calculateProgress()} 
                             sx={{
                                 height: 4,
-                                bgcolor: 'grey.200', // Background color of the progress bar
+                                bgcolor: 'grey.200', 
                                 '& .MuiLinearProgress-bar': {
-                                    bgcolor: 'black', // Progress color
+                                    bgcolor: 'black', 
                                 },
                             }}
                         />

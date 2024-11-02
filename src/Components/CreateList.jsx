@@ -4,12 +4,12 @@ import React, { useState } from "react";
 import { Button, Popover, TextField, Stack, Typography, Box } from "@mui/material";
 import whiteImage from '../assets/Images/whitebg.jpg';
 
-const CreateList = ({ isOpen, onClose, anchorEl, handleSubmit, id }) => { // Removed setLists from here
+const CreateList = ({ isOpen, onClose, anchorEl, handleSubmit, id }) => { 
   const [inputValue, setInputValue] = useState("");
 
   const onSubmit = (event) => {
     event.preventDefault();
-    handleSubmit(inputValue); // Just send inputValue
+    handleSubmit(inputValue); 
     setInputValue(""); 
     onClose(); 
   };

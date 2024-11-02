@@ -1,11 +1,11 @@
 import { fetchSingleBoard, fetchLists } from '../util/utilityFunctions';
 import { Box, Typography, List, Button } from '@mui/material';
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { useParams} from 'react-router-dom'; 
 import CreateList from './CreateList';
-import axios from 'axios'; // Ensure axios is imported
+import axios from 'axios'; 
 import ListItemCard from './ListItemCard';
-import nightImage from '../assets/Images/night.jpg'; // Import the image
+import nightImage from '../assets/Images/night.jpg'; 
 import whiteImage from '../assets/Images/whitebg.jpg';
 
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -18,7 +18,6 @@ function SingleBoard({ boards, setBoards }) {
     const [buttonAnchor, setButtonAnchor] = useState(null);
     
     const { id } = useParams();
-    const navigate = useNavigate(); // Initialize useNavigate
 
     useEffect(() => {
         fetchSingleBoard(id, setSingleBoard);
@@ -37,12 +36,12 @@ function SingleBoard({ boards, setBoards }) {
                     `https://api.trello.com/1/boards/${id}/lists?name=${name}&key=${API_KEY}&token=${TOKEN_KEY}`
                 );
 
-                // Use the response data to update the lists state
-                setLists((prevLists) => [...prevLists, response.data]); // Add the new list from the response
+                
+                setLists((prevLists) => [...prevLists, response.data]); 
             } catch (error) {
                 console.error("Error creating list:", error);
             }
-            setPopoverOpen(false); // Close the popover after creating the list
+            setPopoverOpen(false); 
         }
     };
 
@@ -53,7 +52,7 @@ function SingleBoard({ boards, setBoards }) {
             <Box 
                 style={{
                     minHeight: "100vh",
-                    backgroundImage: `url(${nightImage})`, // Use the imported image
+                    backgroundImage: `url(${nightImage})`, 
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     padding: 3,

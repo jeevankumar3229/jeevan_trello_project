@@ -42,7 +42,6 @@ export default function CheckListPopUp({ opens, setOpens, card }) {
     };
 
     const handleClose = () => {
-        console.log("Closing dialog..."); // Debugging log
         setOpens(false);
     };
 
@@ -57,7 +56,7 @@ export default function CheckListPopUp({ opens, setOpens, card }) {
                 {card.name}
                 <FaTimes 
                     onClick={(e) => {
-                        e.stopPropagation(); // Prevent event propagation
+                        e.stopPropagation(); 
                         handleClose(); 
                     }} 
                     style={{ cursor: 'pointer' }} 
@@ -66,11 +65,11 @@ export default function CheckListPopUp({ opens, setOpens, card }) {
             <DialogContent
                 sx={{
                     backgroundImage: `url(${whiteImage})`, 
-                    backgroundSize:'cover',// Set the background image
+                    backgroundSize:'cover',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
-                    padding: 2, // Add padding for the content
-                    color: 'white', // Adjust text color for contrast
+                    padding: 2, 
+                    color: 'white', 
                 }}
             >
                 <Box>

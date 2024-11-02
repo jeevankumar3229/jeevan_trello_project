@@ -5,7 +5,6 @@ import { FaTimes } from 'react-icons/fa';
 import { deleteCard } from '../util/utilityFunctions';
 import CheckListPopUp from './CheckListPopUp';
 import whiteImage from '../assets/Images/whitebg.jpg';
-import { DiBlackberry } from 'react-icons/di';
 
 const CardItem = ({ card, cardIndex, cards, setCards }) => {
 
@@ -13,7 +12,7 @@ const CardItem = ({ card, cardIndex, cards, setCards }) => {
 
     const removeCard = (index) => {
         const updatedCards = cards.filter((_, i) => i !== index);
-        setCards(updatedCards); // Update the cards state to remove the deleted card
+        setCards(updatedCards); 
     };
 
     const handleDeleteCard = async (cardId, index) => {
@@ -56,7 +55,7 @@ const CardItem = ({ card, cardIndex, cards, setCards }) => {
 
        
 
-    );C
+    );
 };
 
 export default CardItem;

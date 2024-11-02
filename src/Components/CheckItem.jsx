@@ -25,14 +25,14 @@ const CheckItem = ({ checkItem, index, checklistItemId, checkItems, setCheckItem
             if (item.id === itemId) {
                 const newState = item.state === "complete" ? "incomplete" : "complete";
                 
-                // Call updateCheckItemState with the correct parameters
+            
                 updateCheckItemState(itemId, newState, cardId).then(status => {
-                    console.log(status); // Check if the updateCheckItemState call was successful
+                    console.log(status); 
                 });
 
                 return {
                     ...item,
-                    state: newState, // Update the state in the local state
+                    state: newState, 
                 };
             }
             return item;
