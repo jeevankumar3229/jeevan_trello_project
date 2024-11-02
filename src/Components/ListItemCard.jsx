@@ -6,6 +6,7 @@ import { FaTimes } from 'react-icons/fa';
 import { deleteList, fetchCardsForList } from '../util/utilityFunctions';
 import CreateCardPopper from './CreateCardPopper';
 import axios from 'axios';
+import whiteImage from '../assets/Images/whitebg.jpg';
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const TOKEN_KEY = import.meta.env.VITE_TOKEN_KEY;
@@ -65,16 +66,17 @@ const ListItemCard = ({ list, index, lists, setLists }) => {
                     p: 1,
                     flexGrow: 0,
                     flexShrink: 0,
-                    flexBasis: '200px'
+                    flexBasis: '200px',
+                    backgroundImage:`url(${whiteImage})`
                 }}
             >
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Typography variant="h6" sx={{ color: "white" }}>
+                    <Typography variant="h6" sx={{ color: "black" }}>
                         {list.name}
                     </Typography>
                     <FaTimes
                         onClick={() => handleDeleteList(list.id, index)}
-                        style={{ color: 'white', cursor: 'pointer' }}
+                        style={{ color: 'black', cursor: 'pointer' }}
                     />
                 </Box>
 
@@ -90,9 +92,9 @@ const ListItemCard = ({ list, index, lists, setLists }) => {
 
                 <Button
                     variant="contained"
-                    color="primary"
-                    sx={{ width: '100%', mt: 1 }}
+                    sx={{ width: '100%', mt: 1,bgcolor:"black",color:"white" }}
                     onClick={handleListAddButtonClick}
+
                 >
                     Add a card
                 </Button>

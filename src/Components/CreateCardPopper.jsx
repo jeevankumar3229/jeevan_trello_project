@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Button, Popover, TextField, Stack, Typography, Box } from "@mui/material";
+import whiteImage from '../assets/Images/whitebg.jpg';
 
 const CreateCardPopper = ({ isOpen, onClose, anchorEl, handleSubmit, id }) => { // Removed setLists from here
   const [inputValue, setInputValue] = useState("");
@@ -35,7 +36,7 @@ const CreateCardPopper = ({ isOpen, onClose, anchorEl, handleSubmit, id }) => { 
           boxShadow: 3,
           position: 'relative',
           width: 300,
-          backgroundImage: `url('src/assets/Images/whitebg.jpg')`
+          backgroundImage: `url(${whiteImage})`
         }}
       >
         <Button

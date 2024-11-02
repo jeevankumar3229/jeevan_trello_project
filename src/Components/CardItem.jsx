@@ -3,7 +3,9 @@ import React, { useState } from 'react';
 import { Typography, ListItem } from '@mui/material';
 import { FaTimes } from 'react-icons/fa';
 import { deleteCard } from '../util/utilityFunctions';
-import AlertDialog from './AlertDialog';
+import CheckListPopUp from './CheckListPopUp';
+import whiteImage from '../assets/Images/whitebg.jpg';
+import { DiBlackberry } from 'react-icons/di';
 
 const CardItem = ({ card, cardIndex, cards, setCards }) => {
 
@@ -32,13 +34,15 @@ const CardItem = ({ card, cardIndex, cards, setCards }) => {
     return (
         <ListItem
             sx={{
-                bgcolor: 'lightgray',
+             
                 mb: 1,
                 borderRadius: 1,
                 p: 1,
                 display: 'flex',
                 justifyContent: 'space-between',
-                alignItems: 'center'
+                alignItems: 'center',
+                backgroundImage:`url(${whiteImage})`,
+                border:'2px solid black'
             }}
             onClick={openChecklist}
         >
@@ -47,12 +51,12 @@ const CardItem = ({ card, cardIndex, cards, setCards }) => {
                 onClick={() => handleDeleteCard(card.id, cardIndex)}
                 style={{ cursor: 'pointer' }}
             />
-            <AlertDialog opens={opens} setOpens={setOpens} card={card}/>
+            <CheckListPopUp opens={opens} setOpens={setOpens} card={card}/>
         </ListItem>
 
        
 
-    );
+    );C
 };
 
 export default CardItem;

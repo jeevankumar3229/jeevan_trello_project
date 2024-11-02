@@ -151,4 +151,33 @@ async function fetchCheckItems(id, setCheckItems){
         return [];
     }
 }
-export { fetchBoards, handleCreateBoard, fetchSingleBoard ,fetchLists,handleCreateList,deleteList, fetchCardsForList, deleteCard, fetchChecklists,deleteChecklist, fetchCheckItems}
+
+async function deleteCheckItem(id,checkListId) {
+    try {
+        const response = await axios.delete(
+            `https://api.trello.com/1/checklists/${checkListId}/checkItems/${id}?key=${API_KEY}&token=${TOKEN_KEY}`
+        );
+        return response.status === 200;
+    } catch (error) {
+        console.error(`Error deleting list: ${error.message}`);
+        return false;
+    }
+}
+
+
+
+async function updateCheckItemState(id, state, cardId) {
+    try {
+        const response = await axios.put(
+            `https://api.trello.com/1/cards/${cardId}/checkItem/${id}?state=${state}&key=${API_KEY}&token=${TOKEN_KEY}`
+        );
+        console.log("Response from updating check item:", response.data);
+        return response.status === 200;
+    } catch (error) {
+        console.error(`Error updating check item: ${error.message}`);
+        return false;
+    }
+}
+
+
+export { fetchBoards, handleCreateBoard, fetchSingleBoard ,fetchLists,handleCreateList,deleteList, fetchCardsForList, deleteCard, fetchChecklists,deleteChecklist, fetchCheckItems,deleteCheckItem,updateCheckItemState}

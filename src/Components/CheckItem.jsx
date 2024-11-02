@@ -1,37 +1,45 @@
+import { Box, Checkbox, Typography } from "@mui/material";
+import { FaTimes } from "react-icons/fa";
+import { deleteCheckItem, updateCheckItemState } from "../util/utilityFunctions";
+import whiteImage from '../assets/Images/whitebg.jpg';
 
-import { Box, Checkbox, IconButton, Typography } from "@mui/material";
-// import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-// import toast from "react-hot-toast";
-import axios from "axios";
+const CheckItem = ({ checkItem, index, checklistItemId, checkItems, setCheckItems, cardId }) => {
+  const removeCheckItem = (index) => {
+    const updatedCheckItems = checkItems.filter((_, i) => i !== index);
+    setCheckItems(updatedCheckItems);
+  };
 
-const apiKey = import.meta.env.VITE_API_KEY;
-const apiToken = import.meta.env.VITE_API_TOKEN;
+  const handleDeleteCheckItem = async (checkItemId, index) => {
+    const success = await deleteCheckItem(checkItemId, checklistItemId);
+    if (success) {
+      removeCheckItem(index);
+      console.log("Check item successfully deleted.");
+    } else {
+      console.error("Failed to delete the check item.");
+    }
+  };
 
-const CheckItem = ({ checkItem, /*onDeleteCheckItem, updateProgress, checkItems, setCheckItems*/ }) => {
-//   const handleDelete = async () => {
-//     await onDeleteCheckItem(checkItem.id);
-//   };
+  async function handleChange(itemId) {
+    setCheckItems((prevItems) =>
+        prevItems.map((item) => {
+            if (item.id === itemId) {
+                const newState = item.state === "complete" ? "incomplete" : "complete";
+                
+                // Call updateCheckItemState with the correct parameters
+                updateCheckItemState(itemId, newState, cardId).then(status => {
+                    console.log(status); // Check if the updateCheckItemState call was successful
+                });
 
-//   const handleToggleComplete = async (event) => {
-//     console.log("checked: " , event.target.checked);
-//     const updatedState = event.target.checked ? "complete" : "incomplete";
-    
-//     try {
-//       await axios.get(
-//         `https://api.trello.com/1/checklists/${checkItem.idChecklist}/checkItems/${checkItem.id}?state=${updatedState}&key=${apiKey}&token=${apiToken}`
-//       );
+                return {
+                    ...item,
+                    state: newState, // Update the state in the local state
+                };
+            }
+            return item;
+        })
+    );
+}
 
-//       const updatedCheckItems = checkItems.map(item =>
-//         item.id === checkItem.id ? { ...item, state: updatedState } : item
-//       );
-
-//       setCheckItems(updatedCheckItems);
-//       updateProgress(updatedCheckItems); // Update the progress immediately after toggling
-//       toast.success(`Check item marked as ${updatedState}.`);
-//     } catch (error) {
-//       toast.error("Error updating check item state.");
-//     }
-//   };
 
   return (
     <Box
@@ -43,24 +51,23 @@ const CheckItem = ({ checkItem, /*onDeleteCheckItem, updateProgress, checkItems,
         p: 1,
         borderRadius: 1,
         mb: 1,
+        backgroundImage:`url(${whiteImage})`
+        ,border:'2px solid black'
       }}
     >
-      <Box sx={{ display: "flex", alignItems: "center" }}>
+      <Box sx={{ display: "flex", alignItems: "center" ,backgroundImage:`url(${whiteImage})`}}>
         <Checkbox
-        //   checked={checkItem.state === "complete"}
-        //   onChange={handleToggleComplete}
+          checked={checkItem.state === "complete"}
+          onChange={() => handleChange(checkItem.id)}
         />
         <Typography>{checkItem.name}</Typography>
       </Box>
-      {/* <IconButton onClick={handleDelete}>
-        <DeleteForeverIcon />
-      </IconButton> */}
+      <FaTimes
+        onClick={() => handleDeleteCheckItem(checkItem.id, index)}
+        style={{ cursor: 'pointer', color: 'black' }}
+      />
     </Box>
   );
 };
 
 export default CheckItem;
-
-
-
-//----------------
