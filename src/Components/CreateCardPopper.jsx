@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Button, Popover, TextField, Stack, Typography, Box } from "@mui/material";
 
-const CreateList = ({ isOpen, onClose, anchorEl, handleSubmit, id }) => { // Removed setLists from here
+const CreateCardPopper = ({ isOpen, onClose, anchorEl, handleSubmit, id }) => { // Removed setLists from here
   const [inputValue, setInputValue] = useState("");
 
   const onSubmit = (event) => {
@@ -55,9 +55,9 @@ const CreateList = ({ isOpen, onClose, anchorEl, handleSubmit, id }) => { // Rem
         </Button>
         <form onSubmit={onSubmit}>
           <Stack spacing={2}>
-            <Typography variant="h6">Create List</Typography>
+            <Typography variant="h6">Create Card</Typography>
             <TextField
-              label="Create List"
+              label="Create Card"
               variant="outlined"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
@@ -73,4 +73,4 @@ const CreateList = ({ isOpen, onClose, anchorEl, handleSubmit, id }) => { // Rem
   );
 };
 
-export default CreateList;
+export default CreateCardPopper;

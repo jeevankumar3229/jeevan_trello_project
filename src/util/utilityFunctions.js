@@ -89,6 +89,30 @@ async function deleteList(id) {
 }
 
 
+async function fetchCardsForList(id, setCards){
+    try {
+        const response = await axios.get(
+            `https://api.trello.com/1/lists/${id}/cards?key=${API_KEY}&token=${TOKEN_KEY}`
+        );
+        setCards(response.data)
+
+    } catch (error) {
+        console.log(error);
+        return [];
+    }
+}
+
+async function deleteCard(id) {
+    try {
+        const response = await axios.delete(
+            `https://api.trello.com/1/cards/${id}?key=${API_KEY}&token=${TOKEN_KEY}`
+        );
+        return response.status === 200;
+    } catch (error) {
+        console.error(`Error deleting list: ${error.message}`);
+        return false;
+    }
+}
 
 
-export { fetchBoards, handleCreateBoard, fetchSingleBoard ,fetchLists,handleCreateList,deleteList}
+export { fetchBoards, handleCreateBoard, fetchSingleBoard ,fetchLists,handleCreateList,deleteList, fetchCardsForList, deleteCard}

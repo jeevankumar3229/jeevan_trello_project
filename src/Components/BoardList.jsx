@@ -11,12 +11,15 @@ const TOKEN_KEY = import.meta.env.VITE_TOKEN_KEY;
 
 const BoardList = () => {
     const [boards, setBoards] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState();
     const [popoverOpen, setPopoverOpen] = useState(false);
     const [buttonAnchor, setButtonAnchor] = useState(null); 
 
     useEffect(() => {
-        fetchBoards(setBoards,setLoading);
+        async function fetch(){
+            await fetchBoards(setBoards,setLoading);
+        }
+        fetch()
     }, []);
 
     const handleButtonClick = (event) => {
@@ -113,7 +116,7 @@ const BoardList = () => {
                         setBoards={setBoards} 
                     />
                 </Box>
-            )}
+             )}
         </>
     );
 };

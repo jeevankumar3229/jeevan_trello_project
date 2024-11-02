@@ -1,9 +1,13 @@
-import { Box, Typography, List, Button } from '@mui/material';
+import { fetchSingleBoard, fetchLists, deleteList, fetchCardsForList } from '../util/utilityFunctions';
+import { Box, Typography, List, Button, ListItem } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchSingleBoard, fetchLists, handleCreateList, deleteList } from '../util/utilityFunctions';
 import CreateList from './CreateList';
 import { FaTimes } from 'react-icons/fa';
+import axios from 'axios'; // Ensure axios is imported
+const API_KEY = import.meta.env.VITE_API_KEY;
+const TOKEN_KEY = import.meta.env.VITE_TOKEN_KEY;
+import ListItemCard from './ListItemCard';
 
 function SingleBoard({ boards, setBoards }) {
     const [singleBoard, setSingleBoard] = useState({});
@@ -13,42 +17,31 @@ function SingleBoard({ boards, setBoards }) {
 
     const { id } = useParams();
 
-    const handleListAddButtonClick = (event) => {
-        setPopoverOpen(true);
-        setButtonAnchor(event.currentTarget); 
-    };
-
     useEffect(() => {
         fetchSingleBoard(id, setSingleBoard);
         fetchLists(id, setLists);
     }, [id]);
 
-  
-    const removeList = (index) => {
-        const updatedLists = lists.filter((_, i) => i !== index);
-        setLists(updatedLists);
+    const handleListAddButtonClick = (event) => {
+        setPopoverOpen(true);
+        setButtonAnchor(event.currentTarget); 
     };
 
+    const handleCreateListSubmit = async (name) => {
+        if (name) {
+            try {
+                const response = await axios.post(
+                    `https://api.trello.com/1/boards/${id}/lists?name=${name}&key=${API_KEY}&token=${TOKEN_KEY}`
+                );
 
-    const handleDeleteList = async (listId, index) => {
-        const success = await deleteList(listId);
-        console.log(`Delete request for list ID ${listId} was ${success ? 'successful' : 'unsuccessful'}`);
-        if (success) {
-            removeList(index); 
-        } else {
-            console.error('Failed to delete the list');
+                // Use the response data to update the lists state
+                setLists((prevLists) => [...prevLists ,response.data ]); // Add the new list from the response
+            } catch (error) {
+                console.error("Error creating list:", error);
+            }
+            setPopoverOpen(false); // Close the popover after creating the list
         }
-    };
-
- 
-    const addCard = (index) => {
-        const newCardText = prompt("Enter card text");
-        if (newCardText) {
-            const updatedColumns = [...lists];
-            updatedColumns[index].items.push(newCardText);
-            setLists(updatedColumns);
-        }
-    };
+    }
 
     return (
         <>
@@ -56,46 +49,14 @@ function SingleBoard({ boards, setBoards }) {
                 <Typography variant="h4" sx={{ pl: 7, mt: "20px", color: "black" }}>
                     {singleBoard.name}
                 </Typography>
-                <Box sx={{ display: "flex", ml: 5, mr: 5, p: 2, borderRadius: 1 }}>
+                <Box sx={{ display: "flex", ml: 5, mr: 5, p: 2, borderRadius: 1, overflow: 'hidden' }}>
                     {lists.map((list, index) => (
-                        <List
-                            key={list.id}
-                            sx={{
-                                bgcolor: 'black',
-                                borderRadius: 1,
-                                minWidth: '200px',
-                                width: 'auto',
-                                m: 1,
-                                p: 1,
-                                flexGrow: 1,
-                                maxWidth: '100%',
-                                overflow: 'hidden'
-                            }}
-                        >
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <Typography variant="h6" sx={{ color: "white" }}>
-                                    {list.name}
-                                </Typography>
-                                <FaTimes 
-                                    onClick={() => handleDeleteList(list.id, index)}
-                                    style={{ color: 'white', cursor: 'pointer' }} 
-                                />
-                            </Box>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                onClick={() => addCard(index)}
-                                sx={{ width: '100%', mt: 1 }}
-                            >
-                                Add a card
-                            </Button>
-                        </List>
+                        <ListItemCard list={list} index={index} lists={lists} setLists={setLists}/>
                     ))}
                     <List sx={{
                         bgcolor: 'rgba(255, 255, 255, 0.5)',
                         borderRadius: 1,
-                        minWidth: '250px',
-                        width: 'auto',
+                        width: '200px', // Ensure the add list button also has a fixed width
                         p: 1,
                     }}>
                         <Button variant="contained" color="secondary" onClick={handleListAddButtonClick} sx={{ p: 2 }}>
@@ -108,8 +69,7 @@ function SingleBoard({ boards, setBoards }) {
                 isOpen={popoverOpen}
                 onClose={() => setPopoverOpen(false)}
                 anchorEl={buttonAnchor}
-                handleSubmit={handleCreateList}
-                setLists={setLists}
+                handleSubmit={handleCreateListSubmit}
                 id={id}
             />
         </>
