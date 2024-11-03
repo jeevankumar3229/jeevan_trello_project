@@ -2,14 +2,15 @@
 
 import React, { useState } from "react";
 import { Button, Popover, TextField, Stack, Typography, Box } from "@mui/material";
+
 import whiteImage from '../assets/Images/whitebg.jpg';
 
-const CreateList = ({ isOpen, onClose, anchorEl, handleSubmit, id }) => { 
+const CreateList = ({ isOpen, onClose, anchorEl, handleSubmit, id ,setLists}) => { 
   const [inputValue, setInputValue] = useState("");
 
   const onSubmit = (event) => {
     event.preventDefault();
-    handleSubmit(inputValue); 
+    handleSubmit(inputValue,id,setLists); 
     setInputValue(""); 
     onClose(); 
   };

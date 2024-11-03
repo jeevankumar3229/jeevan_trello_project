@@ -1,14 +1,11 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import { Box, TextField } from '@mui/material';
+import { Box, TextField,Button, Dialog,DialogContent,DialogTitle } from '@mui/material';
 import { FaTimes } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
+import axios from 'axios';
+
 import { fetchChecklists } from '../util/utilityFunctions';
 import Checklist from './Checklist';
-import axios from 'axios';
 import whiteImage from '../assets/Images/whitebg.jpg';
 
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -20,7 +17,7 @@ export default function CheckListPopUp({ opens, setOpens, card }) {
 
     useEffect(() => {
         fetchChecklists(card.id, setChecklist);
-    }, [card.id]);
+    }, []);
 
     const onSubmit = (event) => {
         event.preventDefault();
@@ -66,7 +63,6 @@ export default function CheckListPopUp({ opens, setOpens, card }) {
                 sx={{
                     backgroundImage: `url(${whiteImage})`, 
                     backgroundSize:'cover',
-                    backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     padding: 2, 
                     color: 'white', 

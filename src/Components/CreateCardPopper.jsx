@@ -2,14 +2,15 @@
 
 import React, { useState } from "react";
 import { Button, Popover, TextField, Stack, Typography, Box } from "@mui/material";
+
 import whiteImage from '../assets/Images/whitebg.jpg';
 
-const CreateCardPopper = ({ isOpen, onClose, anchorEl, handleSubmit, id }) => { 
+const CreateCardPopper = ({ isOpen, onClose, anchorEl, handleSubmit, id,setCards }) => { 
   const [inputValue, setInputValue] = useState("");
 
   const onSubmit = (event) => {
     event.preventDefault();
-    handleSubmit(inputValue); 
+    handleSubmit(inputValue,id,setCards); 
     setInputValue(""); 
     onClose(); 
   };

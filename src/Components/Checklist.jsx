@@ -1,9 +1,10 @@
 import { Typography, Card, CardContent, Box, TextField, Button, LinearProgress } from "@mui/material";
 import { FaTimes } from "react-icons/fa";
-import { deleteChecklist, fetchCheckItems } from "../util/utilityFunctions";
 import { useState, useEffect } from "react";
+import axios from 'axios';
+
+import { deleteChecklist, fetchCheckItems } from "../util/utilityFunctions";
 import CheckItem from "./CheckItem";
-import axios from 'axios'; 
 import whiteImage from '../assets/Images/whitebg.jpg';
 
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -15,7 +16,7 @@ const Checklist = ({ checklistItem, index, checklist, setChecklist, cardId }) =>
 
     useEffect(() => {
         fetchCheckItems(checklistItem.id, setCheckItems);
-    }, [checklistItem]);
+    }, []);
 
     const handleDeleteChecklist = async (checklistId) => {
         const success = await deleteChecklist(checklistId, cardId);

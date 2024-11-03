@@ -179,4 +179,35 @@ async function updateCheckItemState(id, state, cardId) {
 }
 
 
-export { fetchBoards, handleCreateBoard, fetchSingleBoard ,fetchLists,handleCreateList,deleteList, fetchCardsForList, deleteCard, fetchChecklists,deleteChecklist, fetchCheckItems,deleteCheckItem,updateCheckItemState}
+async function handleCreateCardSubmit(name,listId,setCards){
+    if (name) {
+        try {
+            const response = await axios.post(
+                `https://api.trello.com/1/cards?idList=${listId}&name=${name}&key=${API_KEY}&token=${TOKEN_KEY}`
+            );
+            setCards((prevCards) => [...prevCards, response.data]);
+        } catch (error) {
+            console.error("Error creating list:", error);
+        }
+        setPopoverOpen(false);
+    }
+};
+
+async function handleCreateListSubmit(name,id,setLists){
+    if (name) {
+        try {
+            const response = await axios.post(
+                `https://api.trello.com/1/boards/${id}/lists?name=${name}&key=${API_KEY}&token=${TOKEN_KEY}`
+            );
+
+            
+            setLists((prevLists) => [...prevLists, response.data]); 
+        } catch (error) {
+            console.error("Error creating list:", error);
+        }
+        setPopoverOpen(false); 
+    }
+};
+
+
+export { fetchBoards, handleCreateBoard, fetchSingleBoard ,fetchLists,handleCreateList,deleteList, fetchCardsForList, deleteCard, fetchChecklists,deleteChecklist, fetchCheckItems,deleteCheckItem,updateCheckItemState,handleCreateListSubmit,handleCreateCardSubmit}

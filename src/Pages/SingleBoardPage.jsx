@@ -5,7 +5,6 @@ import SingleBoard from '../Components/SingleBoard'
 const SingleBoardPage = ({boards,setBoards}) => {
   return (
     <div>
-      <Header/>
       <SingleBoard boards={boards} setBoards={setBoards}/>
     </div>
   )

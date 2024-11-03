@@ -12,10 +12,9 @@ const BoardList = () => {
     const [buttonAnchor, setButtonAnchor] = useState(null);
 
     useEffect(() => {
-        async function fetch() {
-            await fetchBoards(setBoards);
-        }
-        fetch()
+       
+       fetchBoards(setBoards);
+        
     }, []);
 
     const handleButtonClick = (event) => {

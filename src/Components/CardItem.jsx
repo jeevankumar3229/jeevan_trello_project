@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Typography, ListItem } from '@mui/material';
 import { FaTimes } from 'react-icons/fa';
+
 import { deleteCard } from '../util/utilityFunctions';
 import CheckListPopUp from './CheckListPopUp';
 import whiteImage from '../assets/Images/whitebg.jpg';
@@ -17,9 +18,7 @@ const CardItem = ({ card, cardIndex, cards, setCards }) => {
 
     const handleDeleteCard = async (cardId, index) => {
         const success = await deleteCard(cardId);
-        console.log(`Delete request for card ID ${cardId} was ${success ? 'successful' : 'unsuccessful'}`);
         if (success) {
-            console.log("success");
             removeCard(index);
         } else {
             console.error('Failed to delete the card');

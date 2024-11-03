@@ -1,5 +1,6 @@
 import { Box, Checkbox, Typography } from "@mui/material";
 import { FaTimes } from "react-icons/fa";
+
 import { deleteCheckItem, updateCheckItemState } from "../util/utilityFunctions";
 import whiteImage from '../assets/Images/whitebg.jpg';
 
@@ -13,7 +14,6 @@ const CheckItem = ({ checkItem, index, checklistItemId, checkItems, setCheckItem
     const success = await deleteCheckItem(checkItemId, checklistItemId);
     if (success) {
       removeCheckItem(index);
-      console.log("Check item successfully deleted.");
     } else {
       console.error("Failed to delete the check item.");
     }

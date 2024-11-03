@@ -1,15 +1,13 @@
-// ListItemCard.js
+
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, List, Button } from '@mui/material';
-import CardItem from './CardItem';
-import { FaTimes } from 'react-icons/fa';
-import { deleteList, fetchCardsForList } from '../util/utilityFunctions';
-import CreateCardPopper from './CreateCardPopper';
 import axios from 'axios';
-import whiteImage from '../assets/Images/whitebg.jpg';
+import { FaTimes } from 'react-icons/fa';
 
-const API_KEY = import.meta.env.VITE_API_KEY;
-const TOKEN_KEY = import.meta.env.VITE_TOKEN_KEY;
+import { deleteList, fetchCardsForList ,handleCreateCardSubmit} from '../util/utilityFunctions';
+import CreateCardPopper from './CreateCardPopper';
+import whiteImage from '../assets/Images/whitebg.jpg';
+import CardItem from './CardItem';
 
 const ListItemCard = ({ list, index, lists, setLists }) => {
     const [cards, setCards] = useState([]);
@@ -18,7 +16,7 @@ const ListItemCard = ({ list, index, lists, setLists }) => {
 
     useEffect(() => {
         fetchCardsForList(list.id, setCards);
-    }, [list.id]);
+    }, []);
 
     const removeList = (index) => {
         const updatedLists = lists.filter((_, i) => i !== index);
@@ -38,20 +36,6 @@ const ListItemCard = ({ list, index, lists, setLists }) => {
     const handleListAddButtonClick = (event) => {
         setPopoverOpen(true);
         setButtonAnchor(event.currentTarget); 
-    };
-
-    const handleCreateListSubmit = async (name) => {
-        if (name) {
-            try {
-                const response = await axios.post(
-                    `https://api.trello.com/1/cards?idList=${list.id}&name=${name}&key=${API_KEY}&token=${TOKEN_KEY}`
-                );
-                setCards((prevCards) => [...prevCards, response.data]);
-            } catch (error) {
-                console.error("Error creating list:", error);
-            }
-            setPopoverOpen(false);
-        }
     };
 
     return (
@@ -103,8 +87,9 @@ const ListItemCard = ({ list, index, lists, setLists }) => {
                 isOpen={popoverOpen}
                 onClose={() => setPopoverOpen(false)}
                 anchorEl={buttonAnchor}
-                handleSubmit={handleCreateListSubmit}
+                handleSubmit={handleCreateCardSubmit}
                 id={list.id}
+                setCards={setCards}
             />
         </div>
     );

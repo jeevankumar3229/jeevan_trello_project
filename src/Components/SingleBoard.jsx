@@ -1,15 +1,14 @@
-import { fetchSingleBoard, fetchLists } from '../util/utilityFunctions';
+
 import { Box, Typography, List, Button } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { useParams} from 'react-router-dom'; 
+
 import CreateList from './CreateList';
-import axios from 'axios'; 
 import ListItemCard from './ListItemCard';
 import nightImage from '../assets/Images/night.jpg'; 
 import whiteImage from '../assets/Images/whitebg.jpg';
+import { fetchSingleBoard, fetchLists, handleCreateListSubmit } from '../util/utilityFunctions';
 
-const API_KEY = import.meta.env.VITE_API_KEY;
-const TOKEN_KEY = import.meta.env.VITE_TOKEN_KEY;
 
 function SingleBoard({ boards, setBoards }) {
     const [singleBoard, setSingleBoard] = useState({});
@@ -22,27 +21,11 @@ function SingleBoard({ boards, setBoards }) {
     useEffect(() => {
         fetchSingleBoard(id, setSingleBoard);
         fetchLists(id, setLists);
-    }, [id]);
+    }, []);
 
     const handleListAddButtonClick = (event) => {
         setPopoverOpen(true);
         setButtonAnchor(event.currentTarget); 
-    };
-
-    const handleCreateListSubmit = async (name) => {
-        if (name) {
-            try {
-                const response = await axios.post(
-                    `https://api.trello.com/1/boards/${id}/lists?name=${name}&key=${API_KEY}&token=${TOKEN_KEY}`
-                );
-
-                
-                setLists((prevLists) => [...prevLists, response.data]); 
-            } catch (error) {
-                console.error("Error creating list:", error);
-            }
-            setPopoverOpen(false); 
-        }
     };
 
     
@@ -93,6 +76,7 @@ function SingleBoard({ boards, setBoards }) {
                 anchorEl={buttonAnchor}
                 handleSubmit={handleCreateListSubmit}
                 id={id}
+                setLists={setLists}
             />
         </>
     );

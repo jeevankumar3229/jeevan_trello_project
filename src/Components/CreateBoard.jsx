@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Popover, TextField, Stack, Typography, Box } from "@mui/material";
+
 import whiteImage from '../assets/Images/whitebg.jpg';
 
 const CreateBoard = ({ isOpen, onClose, anchorEl, handleSubmit, setBoards }) => {
