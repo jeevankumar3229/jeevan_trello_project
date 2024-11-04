@@ -12,7 +12,6 @@ const BoardList = () => {
     const [buttonAnchor, setButtonAnchor] = useState(null);
 
     useEffect(() => {
-       
        fetchBoards(setBoards);
         
     }, []);

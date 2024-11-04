@@ -1,12 +1,13 @@
 const API_KEY = import.meta.env.VITE_API_KEY;
 const TOKEN_KEY = import.meta.env.VITE_TOKEN_KEY;
+const URL=import.meta.env.VITE_URL;
 import axios from "axios";
 
 
 async function fetchBoards(setBoards) {
     try {
         const response = await axios.get(
-            `https://api.trello.com/1/members/me/boards?key=${API_KEY}&token=${TOKEN_KEY}`
+            `${URL}/members/me/boards?key=${API_KEY}&token=${TOKEN_KEY}`
         );
 
         setBoards(response.data);
@@ -21,7 +22,7 @@ async function handleCreateBoard(name, setBoards) {
     if (name) {
         try {
             const response = await axios.post(
-                `https://api.trello.com/1/boards/?name=${name}&key=${API_KEY}&token=${TOKEN_KEY}`
+                `${URL}/boards/?name=${name}&key=${API_KEY}&token=${TOKEN_KEY}`
             );
 
             // Use the response data to update the boards state
@@ -35,7 +36,7 @@ async function handleCreateBoard(name, setBoards) {
 
 async function fetchSingleBoard(id, setSingleBoard) {
     try {
-        const response = await axios.get(`https://api.trello.com/1/boards/${id}?key=${API_KEY}&token=${TOKEN_KEY}`)
+        const response = await axios.get(`${URL}/boards/${id}?key=${API_KEY}&token=${TOKEN_KEY}`)
 
         setSingleBoard(response.data);
 
@@ -49,7 +50,7 @@ async function fetchSingleBoard(id, setSingleBoard) {
 async function fetchLists(id,setLists) {
     try {
         const response = await axios.get(
-            `https://api.trello.com/1/boards/${id}/lists?key=${API_KEY}&token=${TOKEN_KEY}`
+            `${URL}/boards/${id}/lists?key=${API_KEY}&token=${TOKEN_KEY}`
         );
 
         setLists(response.data);
@@ -64,7 +65,7 @@ async function handleCreateList(id,name,setLists) {
     if (name) {
         try {
             const response = await axios.post(
-                `https://api.trello.com/1/boards/${id}/lists?name=${name}&key=${API_KEY}&token=${TOKEN_KEY}`
+                `${URL}/boards/${id}/lists?name=${name}&key=${API_KEY}&token=${TOKEN_KEY}`
             );
 
             // Use the response data to update the boards state
@@ -78,7 +79,7 @@ async function handleCreateList(id,name,setLists) {
 async function deleteList(id) {
     try {
         const response = await axios.put(
-            `https://api.trello.com/1/lists/${id}/closed?value=true&key=${API_KEY}&token=${TOKEN_KEY}`
+            `${URL}/lists/${id}/closed?value=true&key=${API_KEY}&token=${TOKEN_KEY}`
         );
         return response.status === 200;
     } catch (error) {
@@ -91,7 +92,7 @@ async function deleteList(id) {
 async function fetchCardsForList(id, setCards){
     try {
         const response = await axios.get(
-            `https://api.trello.com/1/lists/${id}/cards?key=${API_KEY}&token=${TOKEN_KEY}`
+            `${URL}/lists/${id}/cards?key=${API_KEY}&token=${TOKEN_KEY}`
         );
         setCards(response.data)
 
@@ -104,7 +105,7 @@ async function fetchCardsForList(id, setCards){
 async function deleteCard(id) {
     try {
         const response = await axios.delete(
-            `https://api.trello.com/1/cards/${id}?key=${API_KEY}&token=${TOKEN_KEY}`
+            `${URL}/cards/${id}?key=${API_KEY}&token=${TOKEN_KEY}`
         );
         return response.status === 200;
     } catch (error) {
@@ -116,7 +117,7 @@ async function deleteCard(id) {
 async function fetchChecklists(id, setChecklist){
     try {
         const response = await axios.get(
-            `https://api.trello.com/1/cards/${id}/checklists?key=${API_KEY}&token=${TOKEN_KEY}`
+            `${URL}/cards/${id}/checklists?key=${API_KEY}&token=${TOKEN_KEY}`
         );
         setChecklist(response.data)
 
@@ -129,7 +130,7 @@ async function fetchChecklists(id, setChecklist){
 async function deleteChecklist(id,cardID) {
     try {
         const response = await axios.delete(
-            `https://api.trello.com/1/cards/${cardID}/checklists/${id}?key=${API_KEY}&token=${TOKEN_KEY}`
+            `${URL}/cards/${cardID}/checklists/${id}?key=${API_KEY}&token=${TOKEN_KEY}`
         );
         return response.status === 200;
     } catch (error) {
@@ -141,7 +142,7 @@ async function deleteChecklist(id,cardID) {
 async function fetchCheckItems(id, setCheckItems){
     try {
         const response = await axios.get(
-            `https://api.trello.com/1/checklists/${id}/checkItems?key=${API_KEY}&token=${TOKEN_KEY}`
+            `${URL}/checklists/${id}/checkItems?key=${API_KEY}&token=${TOKEN_KEY}`
         );
         setCheckItems(response.data)
 
@@ -154,7 +155,7 @@ async function fetchCheckItems(id, setCheckItems){
 async function deleteCheckItem(id,checkListId) {
     try {
         const response = await axios.delete(
-            `https://api.trello.com/1/checklists/${checkListId}/checkItems/${id}?key=${API_KEY}&token=${TOKEN_KEY}`
+            `${URL}/checklists/${checkListId}/checkItems/${id}?key=${API_KEY}&token=${TOKEN_KEY}`
         );
         return response.status === 200;
     } catch (error) {
@@ -168,7 +169,7 @@ async function deleteCheckItem(id,checkListId) {
 async function updateCheckItemState(id, state, cardId) {
     try {
         const response = await axios.put(
-            `https://api.trello.com/1/cards/${cardId}/checkItem/${id}?state=${state}&key=${API_KEY}&token=${TOKEN_KEY}`
+            `${URL}/cards/${cardId}/checkItem/${id}?state=${state}&key=${API_KEY}&token=${TOKEN_KEY}`
         );
         console.log("Response from updating check item:", response.data);
         return response.status === 200;
@@ -183,7 +184,7 @@ async function handleCreateCardSubmit(name,listId,setCards){
     if (name) {
         try {
             const response = await axios.post(
-                `https://api.trello.com/1/cards?idList=${listId}&name=${name}&key=${API_KEY}&token=${TOKEN_KEY}`
+                `${URL}/cards?idList=${listId}&name=${name}&key=${API_KEY}&token=${TOKEN_KEY}`
             );
             setCards((prevCards) => [...prevCards, response.data]);
         } catch (error) {
@@ -197,7 +198,7 @@ async function handleCreateListSubmit(name,id,setLists){
     if (name) {
         try {
             const response = await axios.post(
-                `https://api.trello.com/1/boards/${id}/lists?name=${name}&key=${API_KEY}&token=${TOKEN_KEY}`
+                `${URL}/boards/${id}/lists?name=${name}&key=${API_KEY}&token=${TOKEN_KEY}`
             );
 
             
